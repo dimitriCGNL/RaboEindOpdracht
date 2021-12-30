@@ -1,8 +1,7 @@
 let points;
 let Width;
 let Height;
-let Delbuttons = [];
-let Editbuttons = [];
+let buttons = [];
 let EditState = false;
 let globalINDEX;
 let INPUTS = [];
@@ -19,7 +18,7 @@ function preload() {
 function setup() {
     Width = windowWidth;
     Height = windowHeight;
-    createCanvas(Width, Height + 50);
+    createCanvas(Width, Height + 100);
     background(255)
     MakeButtonList(points);
 }
@@ -35,7 +34,7 @@ function draw() {
 function windowResized() {
     Width = windowWidth;
     Height = windowHeight;
-    resizeCanvas(Width, Height + 50);
+    resizeCanvas(Width, Height + 100);
     MakeButtonList(points);
     Editor();
 }
@@ -113,55 +112,61 @@ function Editor() {
 }
 
 function MakeButtonList(points) {
-    for (var i = 0; i < Delbuttons.length; i++) {
-        Delbuttons[i].remove();
-    }
-    for (var i = 0; i < Editbuttons.length; i++) {
-        Editbuttons[i].remove();
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].remove();
     }
 
     N = points.length;
-    const dHeight = Height / N
-    Delbuttons = [];
-    Editbuttons = [];
+    const dHeight = (Height / N)
+    buttons = [];
     for (let i = 0; i < N; i++) {
         rectMode(CORNER)
         fill(255)
-        rect(0, dHeight * i, Width / 4, dHeight)
+        rect(0, (dHeight * i)+50, Width / 4, dHeight)
         fill(0)
         textAlign(LEFT)
         textSize(16)
-        text("ID: " + points[i].id, 10, (dHeight * i) + (20))
-        text("Name: " + points[i].name, 10, (dHeight * i) + (40))
-        text("Beschrijving: " + points[i].beschrijving, 10, (dHeight * i) + (60))
-        text("Location: " + points[i].loc, 10, (dHeight * i) + (80))
-        text("Kleur: " + points[i].color, 10, (dHeight * i) + (100))
+        text("ID: " + points[i].id, 10, (dHeight * i) + (20)+50)
+        text("Name: " + points[i].name, 10, (dHeight * i) + (40)+50)
+        text("Beschrijving: " + points[i].beschrijving, 10, (dHeight * i) + (60)+50)
+        text("Location: " + points[i].loc, 10, (dHeight * i) + (80)+50)
+        text("Kleur: " + points[i].color, 10, (dHeight * i) + (100)+50)
         fill(points[i].color)
         rectMode(CENTER)
-        rect((Width / 4) - 50, (dHeight * i) + 100, 25, 25)
+        rect((Width / 4) - 50, (dHeight * i) + 100+50, 25, 25)
         delbutton = createButton('Delete');
-        delbutton.position((Width / 4) - 50, (dHeight * (i + 1)) - 25);
+        delbutton.position((Width / 4) - 50, (dHeight * (i + 1)) - 25 +50);
         delbutton.mousePressed(function() {
             points.splice(parseInt(points[i].id) - 1, 1)
-            console.log(points)
+            MakeButtonList(points);
+            Editor();
+            Export();
         });
-        Delbuttons.push(delbutton);
+        buttons.push(delbutton);
 
         editbutton = createButton('Edit');
-        editbutton.position((Width / 4) - 50, (dHeight * (i + 1)) - 75);
+        editbutton.position((Width / 4) - 50, (dHeight * (i + 1)) - 75 +50);
         editbutton.mousePressed(function() {
             EditState = true;
             globalINDEX = points[i].id
             Editor();
         });
-        Editbuttons.push(editbutton);
+        buttons.push(editbutton);
 
         addbutton = createButton('Add');
-        addbutton.position((Width / 4) - 50, Height + 25)
+        addbutton.position((Width / 4) - 50, Height + 75)
         addbutton.mousePressed(function() {
             EditState = true;
             globalINDEX = points.length + 1;
             Editor();
+        })
+        buttons.push(addbutton);
+
+        returnbutton = createButton('Return');
+        returnbutton.position(50,25);
+        returnbutton.mousePressed(function() {
+            Export();
+            window.location.replace("..");
         })
     }
 }
