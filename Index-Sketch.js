@@ -39,6 +39,11 @@ function draw() {
         P[i].show();
         P[i].showInfo();
     }
+    Editbutton = createButton('Open Editor')
+    Editbutton.position(50,50)
+    Editbutton.mousePressed(function(){
+        window.location.replace("./edit");
+    })
 
 }
 
