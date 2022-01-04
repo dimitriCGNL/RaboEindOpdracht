@@ -3,8 +3,8 @@ class point{
         this.STATE=false;
         this.IX=INFO.loc[0];
         this.IY=INFO.loc[1];
-        this.X=Chart.x+(0.5*Chart.sx*(this.IX/100));
-        this.Y=Chart.y-(0.5*Chart.sy*(this.IY/100));
+        this.X=(Chart.x-0.5*Chart.sx)+Chart.sx*(this.IX/10);
+        this.Y=(Chart.y+0.5*Chart.sy)-Chart.sy*(this.IY/55);
         this.info=INFO
         this.CHART=Chart;
         this.color=INFO.color;

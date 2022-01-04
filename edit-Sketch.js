@@ -5,7 +5,8 @@ let buttons = [];
 let EditState = false;
 let globalINDEX;
 let INPUTS = [];
-let matrixtable;
+let div;
+let totaly;
 
 function preload() {
     var xmlHttp = new XMLHttpRequest();
@@ -48,10 +49,10 @@ function Editor() {
         INPUTS[i].remove();
     }
 
-    if(matrixtable){
-        matrixtable.remove();
+    if (div) {
+        div.remove();
     }
-    INPUTS=[];
+    INPUTS = [];
     if (EditState) {
         let index = (parseInt(globalINDEX)) - 1;
         if (index == points.length) {
@@ -87,23 +88,24 @@ function Editor() {
         colorPicker.position((Width / 4) + 58, 230);
         text("Bedreigingsmatrix:", (Width / 4) + 50, 270)
             // table a p5.table object to display it as an HTML table
-        let matrix = buildTable(["Mogelijke gevolgen van de bedreiging", "Weinig\n (1)", "Middelmatig\n (3)", "Veel\n (5)", "Kortdurend\n (2)", "Gemiddelde\n duur (4)", "Langdurend\n (6)", "Puntentotaal\n per gevolg"]);
-        insertRow(matrix, ["Ongemak bij klanten/leden", "<input type=\"checkbox\" id=\"11\">", "<input type=\"checkbox\" id=\"12\">", "<input type=\"checkbox\" id=\"13\">", "<input type=\"checkbox\" id=\"14\">", "<input type=\"checkbox\" id=\"15\">", "<input type=\"checkbox\" id=\"16\">", ""]);
-        insertRow(matrix, ["Ongemak bij medewerkers", "<input type=\"checkbox\" id=\"21\">", "<input type=\"checkbox\" id=\"22\">", "<input type=\"checkbox\" id=\"23\">", "<input type=\"checkbox\" id=\"24\">", "<input type=\"checkbox\" id=\"25\">", "<input type=\"checkbox\" id=\"26\">", ""]);
-        insertRow(matrix, ["Ongemak in de maatschappij", "<input type=\"checkbox\" id=\"31\">", "<input type=\"checkbox\" id=\"32\">", "<input type=\"checkbox\" id=\"33\">", "<input type=\"checkbox\" id=\"34\">", "<input type=\"checkbox\" id=\"35\">", "<input type=\"checkbox\" id=\"36\">", ""]);
-        insertRow(matrix, ["Ongemak bij insitutionele beleggers", "<input type=\"checkbox\" id=\"41\">", "<input type=\"checkbox\" id=\"42\">", "<input type=\"checkbox\" id=\"43\">", "<input type=\"checkbox\" id=\"44\">", "<input type=\"checkbox\" id=\"45\">", "<input type=\"checkbox\" id=\"46\">", ""]);
-        insertRow(matrix, ["Beperking bij genereren economische activiteit ", "<input type=\"checkbox\" id=\"51\">", "<input type=\"checkbox\" id=\"52\">", "<input type=\"checkbox\" id=\"53\">", "<input type=\"checkbox\" id=\"54\">", "<input type=\"checkbox\" id=\"55\">", "<input type=\"checkbox\" id=\"56\">", ""]);
-        insertRow(matrix, ["Puntentotaal bedreiging", "","","","","","",""]);
+        let matrix = buildTable(["Mogelijke gevolgen van de bedreiging", "Weinig (1)", "Middelmatig (3)", "Veel (5)", " ", "Kortdurend (2)", "Gemiddelde duur (4)", "Langdurend (6)", "Puntentotaal per gevolg"]);
+        insertRow(matrix, ["Ongemak bij klanten/leden", "<input type=\"checkbox\" id=\"11\">", "<input type=\"checkbox\" id=\"12\">", "<input type=\"checkbox\" id=\"13\">", " ", "<input type=\"checkbox\" id=\"14\">", "<input type=\"checkbox\" id=\"15\">", "<input type=\"checkbox\" id=\"16\">", "<p id=\"p0\">"]);
+        insertRow(matrix, ["Ongemak bij medewerkers", "<input type=\"checkbox\" id=\"21\">", "<input type=\"checkbox\" id=\"22\">", "<input type=\"checkbox\" id=\"23\">", " ", "<input type=\"checkbox\" id=\"24\">", "<input type=\"checkbox\" id=\"25\">", "<input type=\"checkbox\" id=\"26\">", "<p id=\"p1\">"]);
+        insertRow(matrix, ["Ongemak in de maatschappij", "<input type=\"checkbox\" id=\"31\">", "<input type=\"checkbox\" id=\"32\">", "<input type=\"checkbox\" id=\"33\">", " ", "<input type=\"checkbox\" id=\"34\">", "<input type=\"checkbox\" id=\"35\">", "<input type=\"checkbox\" id=\"36\">", "<p id=\"p2\">"]);
+        insertRow(matrix, ["Ongemak bij insitutionele beleggers", "<input type=\"checkbox\" id=\"41\">", "<input type=\"checkbox\" id=\"42\">", "<input type=\"checkbox\" id=\"43\">", " ", "<input type=\"checkbox\" id=\"44\">", "<input type=\"checkbox\" id=\"45\">", "<input type=\"checkbox\" id=\"46\">", "<p id=\"p3\">"]);
+        insertRow(matrix, ["Beperking bij genereren economische activiteit ", "<input type=\"checkbox\" id=\"51\">", "<input type=\"checkbox\" id=\"52\">", "<input type=\"checkbox\" id=\"53\">", " ", "<input type=\"checkbox\" id=\"54\">", "<input type=\"checkbox\" id=\"55\">", "<input type=\"checkbox\" id=\"56\">", "<p id=\"p4\">"]);
+        insertRow(matrix, ["Puntentotaal bedreiging", "", "", "", "", "", "", "", "<p id=\"ptot\">"]);
 
 
-        let div = createDiv('');
+        div = createDiv('');
         div.position((Width / 4) + 50, 280);
         div.id('matrix')
 
         // calling the function to display the p5.Table object as an HTML table
-        matrixtable = build_HTML_table(matrix, "matrix", "matrix","w3-table-all");
+        build_HTML_table(matrix, "matrix", "matrix", "tg");
 
-        Checkboxhandler();
+        var output = Checkboxhandler();
+        console.log(output)
 
         button = createButton('Save');
         button.position((Width / 4) + 58, height - 100);
@@ -116,7 +118,7 @@ function Editor() {
             let col = tmp2.convertToRGB();
             DATA = {
                 id: points[index].id,
-                loc: [doorbraak.value(), '5'],
+                loc: [doorbraak.value(), totaly],
                 color: [col[0], col[1], col[2]],
                 name: name.value(),
                 beschrijving: beschrijving.value()
@@ -175,22 +177,23 @@ function MakeButtonList(points) {
         });
         buttons.push(editbutton);
 
-        addbutton = createButton('Add');
-        addbutton.position((Width / 4) - 50, Height + 75)
-        addbutton.mousePressed(function() {
-            EditState = true;
-            globalINDEX = points.length + 1;
-            Editor();
-        })
-        buttons.push(addbutton);
 
-        returnbutton = createButton('Return');
-        returnbutton.position(50, 25);
-        returnbutton.mousePressed(function() {
-            Export();
-            window.location.replace("..");
-        })
     }
+    addbutton = createButton('Add');
+    addbutton.position((Width / 4) - 50, Height + 75)
+    addbutton.mousePressed(function() {
+        EditState = true;
+        globalINDEX = points.length + 1;
+        Editor();
+    })
+    buttons.push(addbutton);
+
+    returnbutton = createButton('Return');
+    returnbutton.position(50, 25);
+    returnbutton.mousePressed(function() {
+        Export();
+        window.location.replace("..");
+    })
 }
 
 String.prototype.convertToRGB = function() {
@@ -214,9 +217,9 @@ function Export() {
     xhr.send(JSON.stringify(points));
 }
 
-function setValue(idTag, x){
+function setValue(idTag, x) {
     select(idTag).value(x);
-  }
+}
 
 function buildTable(columnHeader) {
     // return an empty P5 table with headers but no data
@@ -286,30 +289,49 @@ function build_HTML_table(tbl, tableID, parentID, classID) {
     t.addClass(classID); // add the  table class from w3.csss
     t.id(tableID); // sets the id for this <table>
     t.parent(parentID);
-    return t;
 }
 
 
-function Checkboxhandler(){
-    var matrix = [];
-for(var i=0; i<5; i++) {
-    matrix[i] = [];
-    for(var j=0; j<6; j++) {
-        matrix[i][j] = undefined;
+function Checkboxhandler() {
+    matrix = [];
+    output = [];
+    for (var i = 0; i < 5; i++) {
+        output[i] = 0;
     }
-}
-    for (let i=0; i<5;i++){
-        for (let j= 0; j <6;j++){
-            matrix[i][j] = document.getElementById(""+(i+1)+(j+1));
-            matrix[i][j].addEventListener('change', function() {
-                if (this.checked) {
-                  console.log("Checkbox is checked..");
-                } else {
-                  console.log("Checkbox is not checked..");
-                }
-              });
+    for (var i = 0; i < 5; i++) {
+        matrix[i] = [];
+        for (var j = 0; j < 6; j++) {
+            matrix[i][j] = undefined;
         }
     }
-    console.log(matrix);
+    for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 3; j++) {
+            matrix[i][j] = document.getElementById("" + (i + 1) + (j + 1));
+            matrix[i][j].addEventListener('change', function() {
+                matrix[i][0].checked = false;
+                matrix[i][1].checked = false;
+                matrix[i][2].checked = false;
+                this.checked = true;
+            });
+        }
+        for (let j = 3; j < 6; j++) {
+            matrix[i][j] = document.getElementById("" + (i + 1) + (j + 1));
+            matrix[i][j].addEventListener('change', function() {
+                matrix[i][3].checked = false;
+                matrix[i][4].checked = false;
+                matrix[i][5].checked = false;
+                this.checked = true;
+            });
+        }
+        for (let j = 0; j < 6; j++) {
+            matrix[i][j] = document.getElementById("" + (i + 1) + (j + 1));
+            matrix[i][j].addEventListener('change', function() {
+                output[i] = matrix[i][0].checked * 1 + matrix[i][1].checked * 3 + matrix[i][2].checked * 5 + matrix[i][3].checked * 2 + matrix[i][4].checked * 4 + matrix[i][5].checked * 6;
+                document.getElementById('p' + i).innerHTML = output[i];
+                totaly = output.reduce((a, b) => a + b, 0);
+                document.getElementById('ptot').innerHTML = totaly
+            });
+        }
+    }
 
 }
