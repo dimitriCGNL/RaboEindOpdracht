@@ -50,6 +50,7 @@ function draw() {
 }
 
 function windowResized() {
+    background(255)
     Width = windowWidth;
     Height = windowHeight;
     resizeCanvas(Width, Height);

@@ -27,8 +27,8 @@ class point{
     }
 
     changewindowsize(Chart){
-        this.X=Chart.x+(0.5*Chart.sx*(this.IX/100));
-        this.Y=Chart.y-(0.5*Chart.sy*(this.IY/100));
+        this.X=(Chart.x-0.5*Chart.sx)+Chart.sx*(this.IX/10);
+        this.Y=(Chart.y+0.5*Chart.sy)-Chart.sy*(this.IY/55);
         this.show();
     }
 
