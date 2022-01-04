@@ -14,7 +14,7 @@ class point{
         fill(this.info.color);
         this.D=27.5;
         if (animation){
-            this.CS=this.D+10*(Math.sin(0.125*T+0));
+            this.CS=this.D+10*(Math.sin(0.125*0.5*T+0));
         }else{
             this.CS=20;
         }

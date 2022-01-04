@@ -5,6 +5,7 @@ let buttons = [];
 let EditState = false;
 let globalINDEX;
 let INPUTS = [];
+let matrixtable;
 
 function preload() {
     var xmlHttp = new XMLHttpRequest();
@@ -42,10 +43,15 @@ function windowResized() {
 function Editor() {
     background(255);
     MakeButtonList(points);
+
     for (let i = 0; i < INPUTS.length; i++) {
         INPUTS[i].remove();
     }
 
+    if(matrixtable){
+        matrixtable.remove();
+    }
+    INPUTS=[];
     if (EditState) {
         let index = (parseInt(globalINDEX)) - 1;
         if (index == points.length) {
@@ -71,20 +77,36 @@ function Editor() {
         beschrijving.position((Width / 4) + 58, 150);
         beschrijving.size(500);
         beschrijving.value(points[index].beschrijving);
-        text("location: [x,y]", (Width / 4) + 50, 180)
-        inputx = createInput();
-        inputx.value(points[index].loc[0])
-        inputx.position((Width / 4) + 58, 190);
-        inputx.size(50);
-        inputy = createInput();
-        inputy.value(points[index].loc[1])
-        inputy.position((Width / 4) + 58, 210);
-        inputy.size(50);
-        text("Color", (Width / 4) + 50, 250)
+        text("Aantal jaar tot doorbraak:", (Width / 4) + 50, 180)
+        doorbraak = createInput();
+        doorbraak.value(points[index].loc[0])
+        doorbraak.position((Width / 4) + 58, 190);
+        doorbraak.size(50);
+        text("Kleur:", (Width / 4) + 50, 220)
         colorPicker = createColorPicker(points[index].color);
-        colorPicker.position((Width / 4) + 58, 270);
+        colorPicker.position((Width / 4) + 58, 230);
+        text("Bedreigingsmatrix:", (Width / 4) + 50, 270)
+            // table a p5.table object to display it as an HTML table
+        let matrix = buildTable(["Mogelijke gevolgen van de bedreiging", "Weinig\n (1)", "Middelmatig\n (3)", "Veel\n (5)", "Kortdurend\n (2)", "Gemiddelde\n duur (4)", "Langdurend\n (6)", "Puntentotaal\n per gevolg"]);
+        insertRow(matrix, ["Ongemak bij klanten/leden", "<input type=\"checkbox\" id=\"11\">", "<input type=\"checkbox\" id=\"12\">", "<input type=\"checkbox\" id=\"13\">", "<input type=\"checkbox\" id=\"14\">", "<input type=\"checkbox\" id=\"15\">", "<input type=\"checkbox\" id=\"16\">", ""]);
+        insertRow(matrix, ["Ongemak bij medewerkers", "<input type=\"checkbox\" id=\"21\">", "<input type=\"checkbox\" id=\"22\">", "<input type=\"checkbox\" id=\"23\">", "<input type=\"checkbox\" id=\"24\">", "<input type=\"checkbox\" id=\"25\">", "<input type=\"checkbox\" id=\"26\">", ""]);
+        insertRow(matrix, ["Ongemak in de maatschappij", "<input type=\"checkbox\" id=\"31\">", "<input type=\"checkbox\" id=\"32\">", "<input type=\"checkbox\" id=\"33\">", "<input type=\"checkbox\" id=\"34\">", "<input type=\"checkbox\" id=\"35\">", "<input type=\"checkbox\" id=\"36\">", ""]);
+        insertRow(matrix, ["Ongemak bij insitutionele beleggers", "<input type=\"checkbox\" id=\"41\">", "<input type=\"checkbox\" id=\"42\">", "<input type=\"checkbox\" id=\"43\">", "<input type=\"checkbox\" id=\"44\">", "<input type=\"checkbox\" id=\"45\">", "<input type=\"checkbox\" id=\"46\">", ""]);
+        insertRow(matrix, ["Beperking bij genereren economische activiteit ", "<input type=\"checkbox\" id=\"51\">", "<input type=\"checkbox\" id=\"52\">", "<input type=\"checkbox\" id=\"53\">", "<input type=\"checkbox\" id=\"54\">", "<input type=\"checkbox\" id=\"55\">", "<input type=\"checkbox\" id=\"56\">", ""]);
+        insertRow(matrix, ["Puntentotaal bedreiging", "","","","","","",""]);
+
+
+        let div = createDiv('');
+        div.position((Width / 4) + 50, 280);
+        div.id('matrix')
+
+        // calling the function to display the p5.Table object as an HTML table
+        matrixtable = build_HTML_table(matrix, "matrix", "matrix","w3-table-all");
+
+        Checkboxhandler();
+
         button = createButton('Save');
-        button.position((Width / 4) + 58, 310);
+        button.position((Width / 4) + 58, height - 100);
 
 
         button.mousePressed(function() {
@@ -94,7 +116,7 @@ function Editor() {
             let col = tmp2.convertToRGB();
             DATA = {
                 id: points[index].id,
-                loc: [inputx.value(), inputy.value()],
+                loc: [doorbraak.value(), '5'],
                 color: [col[0], col[1], col[2]],
                 name: name.value(),
                 beschrijving: beschrijving.value()
@@ -107,7 +129,7 @@ function Editor() {
             Editor();
             Export();
         });
-        INPUTS.push(name, beschrijving, inputx, inputy, colorPicker, button);
+        INPUTS.push(name, beschrijving, doorbraak, colorPicker, button);
     }
 }
 
@@ -122,20 +144,20 @@ function MakeButtonList(points) {
     for (let i = 0; i < N; i++) {
         rectMode(CORNER)
         fill(255)
-        rect(0, (dHeight * i)+50, Width / 4, dHeight)
+        rect(0, (dHeight * i) + 50, Width / 4, dHeight)
         fill(0)
         textAlign(LEFT)
         textSize(16)
-        text("ID: " + points[i].id, 10, (dHeight * i) + (20)+50)
-        text("Name: " + points[i].name, 10, (dHeight * i) + (40)+50)
-        text("Beschrijving: " + points[i].beschrijving, 10, (dHeight * i) + (60)+50)
-        text("Location: " + points[i].loc, 10, (dHeight * i) + (80)+50)
-        text("Kleur: " + points[i].color, 10, (dHeight * i) + (100)+50)
+        text("ID: " + points[i].id, 10, (dHeight * i) + (20) + 50)
+        text("Name: " + points[i].name, 10, (dHeight * i) + (40) + 50)
+        text("Beschrijving: " + points[i].beschrijving, 10, (dHeight * i) + (60) + 50)
+        text("Location: " + points[i].loc, 10, (dHeight * i) + (80) + 50)
+        text("Kleur: " + points[i].color, 10, (dHeight * i) + (100) + 50)
         fill(points[i].color)
         rectMode(CENTER)
-        rect((Width / 4) - 50, (dHeight * i) + 100+50, 25, 25)
+        rect((Width / 4) - 50, (dHeight * i) + 100 + 50, 25, 25)
         delbutton = createButton('Delete');
-        delbutton.position((Width / 4) - 50, (dHeight * (i + 1)) - 25 +50);
+        delbutton.position((Width / 4) - 50, (dHeight * (i + 1)) - 25 + 50);
         delbutton.mousePressed(function() {
             points.splice(parseInt(points[i].id) - 1, 1)
             MakeButtonList(points);
@@ -145,7 +167,7 @@ function MakeButtonList(points) {
         buttons.push(delbutton);
 
         editbutton = createButton('Edit');
-        editbutton.position((Width / 4) - 50, (dHeight * (i + 1)) - 75 +50);
+        editbutton.position((Width / 4) - 50, (dHeight * (i + 1)) - 75 + 50);
         editbutton.mousePressed(function() {
             EditState = true;
             globalINDEX = points[i].id
@@ -163,7 +185,7 @@ function MakeButtonList(points) {
         buttons.push(addbutton);
 
         returnbutton = createButton('Return');
-        returnbutton.position(50,25);
+        returnbutton.position(50, 25);
         returnbutton.mousePressed(function() {
             Export();
             window.location.replace("..");
@@ -190,4 +212,104 @@ function Export() {
     xhr.open("POST", './Data', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(points));
+}
+
+function setValue(idTag, x){
+    select(idTag).value(x);
+  }
+
+function buildTable(columnHeader) {
+    // return an empty P5 table with headers but no data
+    let t = new p5.Table();
+    let c;
+    for (c = 0; c < columnHeader.length; c += 1) {
+        t.addColumn(columnHeader[c]);
+    }
+    return t;
+}
+
+function insertRow(tbl, rowdata) {
+    // insert a row in the  p5.table tbl
+    // the rowdata should be an array of values
+
+    let newrow = tbl.addRow();
+    let newid = tbl.getRowCount() - 1;
+
+    for (let c = 0; c < tbl.getColumnCount(); c++) {
+        newrow.set(tbl.columns[c], rowdata[c]);
+        print('new row ' + newid + ' col ' + c + ' data =' + rowdata[c]);
+    }
+    return;
+}
+
+
+function build_HTML_table(tbl, tableID, parentID, classID) {
+    // create an HTML table with w3.css class with the table tbl
+    // tbl should be a p5.Table object
+    // tableID is the selector ID you want to assign to the table
+    // parentID is the element ID under which you want to locate the table
+    // classID is the class to add to the <table>
+
+    let cc = tbl.getColumnCount();
+    let rc = tbl.getRowCount();
+    let rows = tbl.getRows();
+
+    print('col =' + cc + ' row = ' + rc);
+    print(tbl);
+
+    // setup the table header HTML string
+    let hh = "<tr>"; // header html
+    for (let c = 0; c < cc; c++) {
+        hh += "<th>" + tbl.columns[c] + "</th>";
+    }
+    hh += "</tr>"
+
+    // setup the table row HTML string
+    let rh = ""; // row html
+
+    for (let r = 0; r < rc; r++) {
+        rh += "<tr>";
+        for (let c = 0; c < cc; c++) {
+
+            // add the content of each cell
+            rh += "<td>" + tbl.get(r, c) + "</td>";
+
+        }
+        rh += "</tr>";
+    }
+
+    //print('cell (0,1) = ' + tbl.get(0, 1));
+    //print('cell (0,0) = ' + tbl.get(0, 0));
+
+    let t = createElement('table', hh + rh);
+
+    t.addClass(classID); // add the  table class from w3.csss
+    t.id(tableID); // sets the id for this <table>
+    t.parent(parentID);
+    return t;
+}
+
+
+function Checkboxhandler(){
+    var matrix = [];
+for(var i=0; i<5; i++) {
+    matrix[i] = [];
+    for(var j=0; j<6; j++) {
+        matrix[i][j] = undefined;
+    }
+}
+    for (let i=0; i<5;i++){
+        for (let j= 0; j <6;j++){
+            matrix[i][j] = document.getElementById(""+(i+1)+(j+1));
+            matrix[i][j].addEventListener('change', function() {
+                if (this.checked) {
+                  console.log("Checkbox is checked..");
+                } else {
+                  console.log("Checkbox is not checked..");
+                }
+              });
+        }
+    }
+    console.log(matrix);
+
 }

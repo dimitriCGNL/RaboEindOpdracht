@@ -26,9 +26,11 @@ class chart{
         fill(0,0,0,255);
         textAlign(CENTER, CENTER);
         textSize(32);
-        text('Kwadrant 1',this.x+this.sx/4,this.y-this.sy/4);
-        text('kwadrant 2',this.x-this.sx/4,this.y-this.sy/4);
-        text('kwadrant 3',this.x-this.sx/4,this.y+this.sy/4);
-        text('kwadrant 4',this.x+this.sx/4,this.y+this.sy/4);
+        text('Lange termijn\n Hoog risico',this.x+this.sx/4,this.y-this.sy/4);
+        text('Korte termijn\n Hoog risico',this.x-this.sx/4,this.y-this.sy/4);
+        text('Korte termijn\n Laag risico',this.x-this.sx/4,this.y+this.sy/4);
+        text('Lange termijn\n Laag risico',this.x+this.sx/4,this.y+this.sy/4);
+        textSize(28)
+        //text('Doorbraak moment',this.x,this.y+this.sy/2+50)
     }
 }
