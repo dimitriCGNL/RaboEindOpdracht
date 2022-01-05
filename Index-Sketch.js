@@ -24,7 +24,7 @@ function setup() {
     createCanvas(Width, Height);
     frameRate(60);
     background(255);
-    chart1 = new chart(Width / 2, Height / 2, 2 * Width / 3, 2 * Height / 3);
+    chart1 = new chart((Width / 2), (Height / 2), 2 * Width / 3, 2 * Height / 3);
     for (var i = 0; i < points.length; i++) {
         P.push(new point(points[i], chart1));
     }
@@ -40,6 +40,10 @@ function setup() {
 
 function draw() {
     background(255)
+    textAlign(CENTER, CENTER)
+    fill(0)
+    textSize(30);
+    text("RaboBank Cyber Threat Chart", Width/2,50)
     chart1.show();
     for (var i = 0; i < P.length; i++) {
         P[i].show();
@@ -69,4 +73,8 @@ function mousePressed() {
             P[i].changeState();
         }
     }
+}
+
+function Legenda(){
+    
 }

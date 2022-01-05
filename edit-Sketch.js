@@ -7,6 +7,7 @@ let globalINDEX;
 let INPUTS = [];
 let div;
 let totaly;
+let N;
 
 function preload() {
     var xmlHttp = new XMLHttpRequest();
@@ -18,9 +19,10 @@ function preload() {
 
 
 function setup() {
+    N = points.length;
     Width = windowWidth;
-    Height = windowHeight;
-    createCanvas(Width, Height + 100);
+    Height = windowHeight + 200 * N;
+    createCanvas(Width, Height);
     background(255)
     MakeButtonList(points);
 }
@@ -35,8 +37,8 @@ function draw() {
 
 function windowResized() {
     Width = windowWidth;
-    Height = windowHeight;
-    resizeCanvas(Width, Height + 100);
+    Height = windowHeight + 200 * N;
+    resizeCanvas(Width, Height);
     MakeButtonList(points);
     Editor();
 }
@@ -61,7 +63,8 @@ function Editor() {
                 loc: [0, 0],
                 color: [0, 0, 0],
                 name: '',
-                beschrijving: ''
+                beschrijving: '',
+                table: undefined
             }
             points.push(DATA);
         }
@@ -102,13 +105,29 @@ function Editor() {
         div.id('matrix')
 
         // calling the function to display the p5.Table object as an HTML table
-        build_HTML_table(matrix, "matrix", "matrix", "tg");
+        let table = build_HTML_table(matrix, "matrix", "matrix", "tg");
 
-        var output = Checkboxhandler();
-        console.log(output)
+        if (points[index].table) {
+            matrix = [];
+            for (var i = 0; i < 5; i++) {
+                matrix[i] = [];
+                for (var j = 0; j < 6; j++) {
+                    matrix[i][j] = undefined;
+                }
+            }
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 6; j++) {
+                    matrix[i][j] = document.getElementById("" + (i + 1) + (j + 1));
+                    matrix[i][j].checked = points[index].table[i][j];
+                }
+            }
+        }
+
+        Checkboxhandler();
+
 
         button = createButton('Save');
-        button.position((Width / 4) + 58, height - 100);
+        button.position((Width / 4) + 58, 800);
 
 
         button.mousePressed(function() {
@@ -116,15 +135,16 @@ function Editor() {
             tmp = tmp.split('#')
             let tmp2 = tmp[1];
             let col = tmp2.convertToRGB();
+            let output = CheckboxState();
             DATA = {
                 id: points[index].id,
                 loc: [doorbraak.value(), totaly],
                 color: [col[0], col[1], col[2]],
                 name: name.value(),
-                beschrijving: beschrijving.value()
+                beschrijving: beschrijving.value(),
+                table: output
             }
             points[index] = DATA
-            console.log(points)
             background(255);
             EditState = false;
             MakeButtonList(points);
@@ -141,7 +161,7 @@ function MakeButtonList(points) {
     }
 
     N = points.length;
-    const dHeight = (Height / N)
+    const dHeight = 200;
     buttons = [];
     for (let i = 0; i < N; i++) {
         rectMode(CORNER)
@@ -163,6 +183,7 @@ function MakeButtonList(points) {
         delbutton.mousePressed(function() {
             points.splice(parseInt(points[i].id) - 1, 1)
             MakeButtonList(points);
+            windowResized();
             Editor();
             Export();
         });
@@ -180,8 +201,9 @@ function MakeButtonList(points) {
 
     }
     addbutton = createButton('Add');
-    addbutton.position((Width / 4) - 50, Height + 75)
+    addbutton.position((Width / 4) - 50, 25)
     addbutton.mousePressed(function() {
+        windowResized();
         EditState = true;
         globalINDEX = points.length + 1;
         Editor();
@@ -194,6 +216,7 @@ function MakeButtonList(points) {
         Export();
         window.location.replace("..");
     })
+    buttons.push(returnbutton);
 }
 
 String.prototype.convertToRGB = function() {
@@ -240,7 +263,7 @@ function insertRow(tbl, rowdata) {
 
     for (let c = 0; c < tbl.getColumnCount(); c++) {
         newrow.set(tbl.columns[c], rowdata[c]);
-        print('new row ' + newid + ' col ' + c + ' data =' + rowdata[c]);
+        //print('new row ' + newid + ' col ' + c + ' data =' + rowdata[c]);
     }
     return;
 }
@@ -257,8 +280,8 @@ function build_HTML_table(tbl, tableID, parentID, classID) {
     let rc = tbl.getRowCount();
     let rows = tbl.getRows();
 
-    print('col =' + cc + ' row = ' + rc);
-    print(tbl);
+    //print('col =' + cc + ' row = ' + rc);
+    //print(tbl);
 
     // setup the table header HTML string
     let hh = "<tr>"; // header html
@@ -289,12 +312,14 @@ function build_HTML_table(tbl, tableID, parentID, classID) {
     t.addClass(classID); // add the  table class from w3.csss
     t.id(tableID); // sets the id for this <table>
     t.parent(parentID);
+    return t;
 }
 
 
 function Checkboxhandler() {
     matrix = [];
     output = [];
+    output2 = [];
     for (var i = 0; i < 5; i++) {
         output[i] = 0;
     }
@@ -302,6 +327,12 @@ function Checkboxhandler() {
         matrix[i] = [];
         for (var j = 0; j < 6; j++) {
             matrix[i][j] = undefined;
+        }
+    }
+    for (var i = 0; i < 5; i++) {
+        output2[i] = [];
+        for (var j = 0; j < 6; j++) {
+            output2[i][j] = undefined;
         }
     }
     for (let i = 0; i < 5; i++) {
@@ -325,6 +356,10 @@ function Checkboxhandler() {
         }
         for (let j = 0; j < 6; j++) {
             matrix[i][j] = document.getElementById("" + (i + 1) + (j + 1));
+            output[i] = matrix[i][0].checked * 1 + matrix[i][1].checked * 3 + matrix[i][2].checked * 5 + matrix[i][3].checked * 2 + matrix[i][4].checked * 4 + matrix[i][5].checked * 6;
+            document.getElementById('p' + i).innerHTML = output[i];
+            totaly = output.reduce((a, b) => a + b, 0);
+            document.getElementById('ptot').innerHTML = totaly
             matrix[i][j].addEventListener('change', function() {
                 output[i] = matrix[i][0].checked * 1 + matrix[i][1].checked * 3 + matrix[i][2].checked * 5 + matrix[i][3].checked * 2 + matrix[i][4].checked * 4 + matrix[i][5].checked * 6;
                 document.getElementById('p' + i).innerHTML = output[i];
@@ -334,4 +369,31 @@ function Checkboxhandler() {
         }
     }
 
+
+}
+
+function CheckboxState() {
+    let matrix = [];
+    let output2 = [];
+
+    for (var i = 0; i < 5; i++) {
+        matrix[i] = [];
+        for (var j = 0; j < 6; j++) {
+            matrix[i][j] = undefined;
+        }
+    }
+    for (var i = 0; i < 5; i++) {
+        output2[i] = [];
+        for (var j = 0; j < 6; j++) {
+            output2[i][j] = undefined;
+        }
+    }
+    for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 6; j++) {
+            matrix[i][j] = document.getElementById("" + (i + 1) + (j + 1));
+            output2[i][j] = matrix[i][j].checked;
+        }
+    }
+
+    return output2;
 }
