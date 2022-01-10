@@ -47,9 +47,10 @@ function draw() {
     chart1.show();
     for (var i = 0; i < P.length; i++) {
         P[i].show();
+    }
+    for (var i = 0; i < P.length; i++) {
         P[i].showInfo();
     }
-    
 
 }
 

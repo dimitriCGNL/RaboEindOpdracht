@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        .tg {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        
+        .tg td {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+        
+        .tg th {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+        
+        .tg .tg-0lax {
+            text-align: left;
+            vertical-align: top
+        }
+    </style>
+
+</head>
+
+
+<body>
+    
+    <title>RaboBank Cyber Threat Chart</title>
+    <h1 id='name' style="position: relative;  top: 5px; text-align: center;"></h1>
+    <h2 id='beschrijving' style="position: relative; top: 50px; text-align: center;"></h1>
+    <div id="matrix" style="position: absolute; left: 0%; top: 50%;">
+        <table class="tg" id="matrix">
+            <tbody>
+                <tr>
+                    <th>Mogelijke gevolgen van de bedreiging</th>
+                    <th>Weinig (1)</th>
+                    <th>Middelmatig (3)</th>
+                    <th>Veel (5)</th>
+                    <th> </th>
+                    <th>Kortdurend (2)</th>
+                    <th>Gemiddelde duur (4)</th>
+                    <th>Langdurend (6)</th>
+                    <th>Puntentotaal per gevolg</th>
+                </tr>
+                <tr>
+                    <td>Ongemak bij klanten/leden</td>
+                    <td><input type="checkbox" id="11"></td>
+                    <td><input type="checkbox" id="12"></td>
+                    <td><input type="checkbox" id="13"></td>
+                    <td> </td>
+                    <td><input type="checkbox" id="14"></td>
+                    <td><input type="checkbox" id="15"></td>
+                    <td><input type="checkbox" id="16"></td>
+                    <td>
+                        <p id="p0">7</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ongemak bij medewerkers</td>
+                    <td><input type="checkbox" id="21"></td>
+                    <td><input type="checkbox" id="22"></td>
+                    <td><input type="checkbox" id="23"></td>
+                    <td> </td>
+                    <td><input type="checkbox" id="24"></td>
+                    <td><input type="checkbox" id="25"></td>
+                    <td><input type="checkbox" id="26"></td>
+                    <td>
+                        <p id="p1">7</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ongemak in de maatschappij</td>
+                    <td><input type="checkbox" id="31"></td>
+                    <td><input type="checkbox" id="32"></td>
+                    <td><input type="checkbox" id="33"></td>
+                    <td> </td>
+                    <td><input type="checkbox" id="34"></td>
+                    <td><input type="checkbox" id="35"></td>
+                    <td><input type="checkbox" id="36"></td>
+                    <td>
+                        <p id="p2">3</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ongemak bij insitutionele beleggers</td>
+                    <td><input type="checkbox" id="41"></td>
+                    <td><input type="checkbox" id="42"></td>
+                    <td><input type="checkbox" id="43"></td>
+                    <td> </td>
+                    <td><input type="checkbox" id="44"></td>
+                    <td><input type="checkbox" id="45"></td>
+                    <td><input type="checkbox" id="46"></td>
+                    <td>
+                        <p id="p3">7</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Beperking bij genereren economische activiteit </td>
+                    <td><input type="checkbox" id="51"></td>
+                    <td><input type="checkbox" id="52"></td>
+                    <td><input type="checkbox" id="53"></td>
+                    <td> </td>
+                    <td><input type="checkbox" id="54"></td>
+                    <td><input type="checkbox" id="55"></td>
+                    <td><input type="checkbox" id="56"></td>
+                    <td>
+                        <p id="p4">7</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Puntentotaal bedreiging</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <p id="ptot">31</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", './data', false); // false for synchronous request
+        xmlHttp.send(null);
+        var data = xmlHttp.responseText;
+        points = JSON.parse(data);
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const params = Object.fromEntries(urlSearchParams.entries());
+        var val = params.id
+        var index = points.findIndex(function(item, i) {
+            return item.id === parseInt(val, 10)
+        });
+        document.getElementById('name').innerHTML = points[index].name
+        document.getElementById('beschrijving').innerHTML = points[index].beschrijving
+
+        let matrix=[];
+        let output=[];
+        for (var i = 0; i < 5; i++) {
+             matrix[i] = [];
+            for (var j = 0; j < 6; j++) {
+                matrix[i][j] = undefined;
+            }
+        }
+        for (var i = 0; i < 5; i++) {
+            output[i] = 0;
+        }
+
+        for (let i = 0; i < 5; i++) {
+            for (let j = 0; j < 6; j++) {
+                matrix[i][j] = document.getElementById("" + (i + 1) + (j + 1));
+                matrix[i][j].checked = points[index].table[i][j];
+            }
+        }
+        for (let j = 0; j < 6; j++) {
+            matrix[i][j] = document.getElementById("" + (i + 1) + (j + 1));
+            output[i] = matrix[i][0].checked * 1 + matrix[i][1].checked * 3 + matrix[i][2].checked * 5 + matrix[i][3].checked * 2 + matrix[i][4].checked * 4 + matrix[i][5].checked * 6;
+            document.getElementById('p' + i).innerHTML = output[i];
+            totaly = output.reduce((a, b) => a + b, 0);
+            document.getElementById('ptot').innerHTML = totaly
+            matrix[i][j].addEventListener('change', function() {
+                output[i] = matrix[i][0].checked * 1 + matrix[i][1].checked * 3 + matrix[i][2].checked * 5 + matrix[i][3].checked * 2 + matrix[i][4].checked * 4 + matrix[i][5].checked * 6;
+                document.getElementById('p' + i).innerHTML = output[i];
+                totaly = output.reduce((a, b) => a + b, 0);
+                document.getElementById('ptot').innerHTML = totaly
+            });
+        }
+    </script>
+</body>
+
+</html>

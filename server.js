@@ -25,6 +25,10 @@ app.get('/edit',function(req,res){
     res.sendFile(path.join(__dirname,'edit.html'))
 })
 
+app.get('/view',function(req,res){
+    res.sendFile(path.join(__dirname,'view.html'))
+})
+
 app.get('/data',function(req,res){
     var data = Loaddata();
     res.send(data)

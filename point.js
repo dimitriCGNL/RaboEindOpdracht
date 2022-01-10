@@ -58,12 +58,12 @@ class point {
     showName() {
         fill(255)
         textSize(16);
-        rect(this.X,this.Y-25,textWidth(this.info.name)+5,20);
+        rect(this.X, this.Y - 25, textWidth(this.info.name) + 5, 20);
         textAlign(CENTER, CENTER);
         fill(0);
         text(this.info.name, this.X, this.Y - 25);
         rectMode(CENTER)
-        
+
     }
 
     changeState() {
@@ -77,9 +77,32 @@ class point {
 
     showInfo() {
         if (this.STATE) {
+            if (this.returnButton) {
+                this.returnButton.remove();
+                document.body.removeChild(this.ifrm)
+            }
             fill(255);
-            rectMode(CENTER)
-            rect()
+            rectMode(CENTER);
+            rect(width / 2, height / 2, width / 2, height / 2)
+            this.returnButton = createButton('X');
+            this.returnButton.position(width / 4, height / 4)
+            this.returnButton.mousePressed(function() {
+                window.location.href = "/";
+            })
+            noLoop();
+            this.ifrm = document.createElement("iframe");
+            this.ifrm.setAttribute("src", "/view?id="+this.info.id);
+            this.ifrm.style.position = "absolute";
+            this.ifrm.style.top = (height/4)+25+"px";
+            this.ifrm.style.left = (width/4)+25+"px"
+            this.ifrm.style.width = (width/2)-50+"px";
+            this.ifrm.style.height = (height/2)-50+"px";
+            document.body.appendChild(this.ifrm);
+        } else {
+            if (this.returnButton) {
+                this.returnButton.remove();
+                document.body.removeChild(this.ifrm)
+            }
         }
     }
 }
