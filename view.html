@@ -49,7 +49,8 @@
     
     <title>RaboBank Cyber Threat Chart</title>
     <h1 id='name' style="position: relative;  top: 5px; text-align: center;"></h1>
-    <h2 id='beschrijving' style="position: relative; top: 50px; text-align: center;"></h1>
+    <h2 id='beschrijving' style="position: relative; top: 50px; text-align: center;"></h2>
+    <h2 id='doorbraak' style="position: relative; top: 55px; text-align: center;"></h2>
     <div id="matrix" style="position: absolute; left: 0%; top: 50%;">
         <table class="tg" id="matrix">
             <tbody>
@@ -159,6 +160,7 @@
         });
         document.getElementById('name').innerHTML = points[index].name
         document.getElementById('beschrijving').innerHTML = points[index].beschrijving
+        document.getElementById('doorbraak').innerHTML = "verwachte doorbraak in: " + points[index].loc[0] + " jaar."
 
         let matrix=[];
         let output=[];
