@@ -83,9 +83,9 @@ class point {
             }
             fill(255);
             rectMode(CENTER);
-            rect(width / 2, height / 2, width / 2, height / 2)
+            rect(width / 2, height / 2, 960, 487.5)
             this.returnButton = createButton('X');
-            this.returnButton.position(width / 4, height / 4)
+            this.returnButton.position((width / 2)-(960/2), (height / 2)-(487.5/2))
             this.returnButton.mousePressed(function() {
                 window.location.href = "/";
             })
@@ -93,10 +93,14 @@ class point {
             this.ifrm = document.createElement("iframe");
             this.ifrm.setAttribute("src", "/view?id="+this.info.id);
             this.ifrm.style.position = "absolute";
-            this.ifrm.style.top = (height/4)+25+"px";
-            this.ifrm.style.left = (width/4)+25+"px"
-            this.ifrm.style.width = (width/2)-50+"px";
-            this.ifrm.style.height = (height/2)-50+"px";
+            this.ifrm.style.top = (height/2)-(437.5/2)+"px";
+            //this.ifrm.style.top = "268.75px";
+            this.ifrm.style.left = (width/2)-(910/2)+"px"
+            //this.ifrm.style.left = "505px"
+            //this.ifrm.style.width = (width/2)-50+"px";
+            this.ifrm.style.width = "910px";
+            //this.ifrm.style.height = (height/2)-50+"px";
+            this.ifrm.style.height = "437.5px";
             document.body.appendChild(this.ifrm);
         } else {
             if (this.returnButton) {
