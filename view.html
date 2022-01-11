@@ -51,7 +51,7 @@
     <h1 id='name' style="position: relative;  top: 5px; text-align: center;"></h1>
     <h2 id='beschrijving' style="position: relative; top: 50px; text-align: center;"></h2>
     <h2 id='doorbraak' style="position: relative; top: 55px; text-align: center;"></h2>
-    <div id="matrix" style="position: absolute; left: 0%; top: 50%;">
+    <div id="matrix" style="position: relative; left: 0%; top: 60px;">
         <table class="tg" id="matrix">
             <tbody>
                 <tr>
@@ -146,6 +146,8 @@
             </tbody>
         </table>
     </div>
+    <br>
+    <p id='uitleg' style="position: relative; top: 75px;"></p>
     <script>
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", './data', false); // false for synchronous request
@@ -161,6 +163,7 @@
         document.getElementById('name').innerHTML = points[index].name
         document.getElementById('beschrijving').innerHTML = points[index].beschrijving
         document.getElementById('doorbraak').innerHTML = "verwachte doorbraak in: " + points[index].loc[0] + " jaar."
+        document.getElementById('uitleg').innerHTML = points[index].uitleg
 
         let matrix=[];
         let output=[];

@@ -1,1 +1,287 @@
-[{"id":1,"loc":["7.5",41],"color":[255,0,0],"name":"AI","beschrijving":"Geautomatiseerde aanvallen","table":[[false,true,false,false,true,false],[false,false,true,false,false,true],[false,true,false,false,true,false],[false,true,false,false,true,false],[false,true,false,false,false,true]]},{"id":2,"loc":["2",39],"color":[115,255,0],"name":"AI","beschrijving":"Autonome systemen zijn gevoeliger voor cyberaanvallen","table":[[false,true,false,false,true,false],[false,false,true,false,false,true],[true,false,false,false,true,false],[false,true,false,false,true,false],[false,true,false,false,false,true]]},{"id":3,"loc":["5",37],"color":[255,234,0],"name":"Private internetten","beschrijving":"Minder verbindingen met andere partijen","table":[[true,false,false,false,true,false],[false,true,false,false,false,true],[true,false,false,false,true,false],[false,true,false,false,true,false],[false,false,true,false,false,true]]},{"id":4,"loc":["1",31],"color":[30,0,255],"name":"Deepfake","beschrijving":"Onzekerheid over juistheid identiteiten","table":[[false,false,true,false,true,false],[false,false,true,false,true,false],[false,true,false,true,false,false],[true,false,false,true,false,false],[true,false,false,false,true,false]]},{"id":5,"loc":["2",29],"color":[0,255,251],"name":"Versleutelen en Cloud toepassingen","beschrijving":"Detectie onder druk","table":[[true,false,false,true,false,false],[false,false,true,false,false,true],[true,false,false,false,true,false],[true,false,false,true,false,false],[false,true,false,false,true,false]]}]
+[
+    {
+        "id": 1,
+        "loc": [
+            "7.5",
+            41
+        ],
+        "color": [
+            255,
+            0,
+            0
+        ],
+        "name": "AI",
+        "beschrijving": "Geautomatiseerde aanvallen",
+        "table": [
+            [
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+            ],
+            [
+                false,
+                false,
+                true,
+                false,
+                false,
+                true
+            ],
+            [
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+            ],
+            [
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+            ],
+            [
+                false,
+                true,
+                false,
+                false,
+                false,
+                true
+            ]
+        ],
+        "uitleg": "Artificial intelligence (AI) en machine learning (ML) kan gebruikt worden om het proces van een digitale aanval te gedeeltelijk te automatiseren.<br>AI is goed in het geautomatiseerd uitvoeren van taken en deze taken op een ‘slimme’ manier uitvoeren, ML is goed in het herkennen van patronen in data.<br>Om weer te geven hoe dit gedaan wordt word er gekeken naar de Cyber Kill Chain, dit is de stappen die aan aanvallen zet om een aanval uit te voeren.<br><b>Reconnaissance</b><br>Een AI netwerk kan gebruikt worden om het internet af te zoeken naar interessante informatie over een target vervolgens kan deze informatie met ML gesorteerd en uitgezocht worden.<br>Naast informatie krijgen over een of meerdere personen is het voor een aanvaller ook nodig om te onderzoeken welke device’s mogelijk gebruikt kunnen worden voor de aanval.<br>Een AI netwerk kan bestaande tools zoals nmap gebruiken om geautomatiseerd te zoeken naar kwetsbaarheden in de buiten kant van het netwerk van de target de verkregen data kan vervolgens weer met ML gesorteerd worden.<br><b>Weaponization</b><br>Een AI kan een tool zoals Metasploit gebruiken om aan de hand van de verkregen informatie een passend stuk malware te gebruiken, metasploit is een tool dat aan de hand van een kwetsbaarheid een passend stuk malware kan opzoeken in zijn database.<br>Een AI kan dus met metasploit geautomatiseerd opzoeken welke malware mogelijk effect heeft op de target<br>Deze methode werkt echter alleen als de target een reeks bekende kwetsbaarheid heeft waar al een of meerdere stukken malware voor bestaan.<br><b>Delivery</b><br>De delivery fase is lastig te automatiseren omdat de methode heel sterk verschilt van target tot target, bij de een is het een phishing mail bij de ander het opsturen van een USB stick en bij weer een ander het namaken van een inlog portaal.<br>Omdat deze methodes zo verschillen en input van een aanvaller nodig hebben is er weinig tot geen mogelijkheid om dit proces volledig te automatiseren. <br>Een mogelijkheid waar automatisering door AI of ML wel kan werken is bij het opstellen en sturen van spearphishing mails.<br><b>Command and control</b><br>Na het infecteren van de target wacht de malware vaak op commando’s van een “command and control” (C2) server. Als de target het communicatie netwerk tussen de malware en de C2 server blokkeert kan de aanvaller geen nieuwe commando’s aan de malware sturen.<br>De aanvaller kan in de malware een AI algoritme gebruiken dat controleert of het communicatie netwerk nog beschikbaar is. In het geval dat dit niet zo is kan het algoritme een nieuw netwerk proberen op te stellen."
+    },
+    {
+        "id": 2,
+        "loc": [
+            "2",
+            39
+        ],
+        "color": [
+            115,
+            255,
+            0
+        ],
+        "name": "AI",
+        "beschrijving": "Autonome systemen zijn gevoeliger voor cyberaanvallen",
+        "table": [
+            [
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+            ],
+            [
+                false,
+                false,
+                true,
+                false,
+                false,
+                true
+            ],
+            [
+                true,
+                false,
+                false,
+                false,
+                true,
+                false
+            ],
+            [
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+            ],
+            [
+                false,
+                true,
+                false,
+                false,
+                false,
+                true
+            ]
+        ],
+        "uitleg": "Omdat dit nog een vrij nieuwe techniek is zal de praktijk leren welke kwetsbaarheden deze systemen hebben, veel van deze systemen zijn zeer afhankelijk van sensoren (deze kunnen fysiek of virtueel zijn). Als een aanvaller erin slaagt deze sensoren te spoofen is het mogelijk dat het autonome systeem incorrect gaat reageren. "
+    },
+    {
+        "id": 3,
+        "loc": [
+            "5",
+            37
+        ],
+        "color": [
+            255,
+            234,
+            0
+        ],
+        "name": "Private internetten",
+        "beschrijving": "Minder verbindingen met andere partijen",
+        "table": [
+            [
+                true,
+                false,
+                false,
+                false,
+                true,
+                false
+            ],
+            [
+                false,
+                true,
+                false,
+                false,
+                false,
+                true
+            ],
+            [
+                true,
+                false,
+                false,
+                false,
+                true,
+                false
+            ],
+            [
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+            ],
+            [
+                false,
+                false,
+                true,
+                false,
+                false,
+                true
+            ]
+        ],
+        "uitleg": "In de wereld houden steeds meer landen en organisaties zich bezig om zich af te zonderen van het world wide web en via hun eigen ‘private internet’ te werken. Zo kan een overheid of bedrijf afgeschermd van de rest van de wereld communiceren en ook intensief hun internet monitoren.<br>Zie het als een VPN netwerk voor een bedrijf of land"
+    },
+    {
+        "id": 4,
+        "loc": [
+            "1",
+            31
+        ],
+        "color": [
+            30,
+            0,
+            255
+        ],
+        "name": "Deepfake",
+        "beschrijving": "Onzekerheid over juistheid identiteiten",
+        "table": [
+            [
+                false,
+                false,
+                true,
+                false,
+                true,
+                false
+            ],
+            [
+                false,
+                false,
+                true,
+                false,
+                true,
+                false
+            ],
+            [
+                false,
+                true,
+                false,
+                true,
+                false,
+                false
+            ],
+            [
+                true,
+                false,
+                false,
+                true,
+                false,
+                false
+            ],
+            [
+                true,
+                false,
+                false,
+                false,
+                true,
+                false
+            ]
+        ],
+        "uitleg": "Deepfake is de methode een gezicht van een persoon te vervangen met een ander in een video of foto, Door het gebruik van een neuraal netwerk wordt dit gedaan zodat het bijna niet van echt te onderscheiden is.<br>Deze technologie wordt steeds toegankelijker en wordt steeds meer gebruikt door aanvallers.<br>In 2021 gebruikte een kwaadwillende deze techniek om zich voor te doen als  Leonid Volkov een medewerker van de Russische oppositieleider Aleksej Navalny. De kwaadwillende gebruikte de techniek om zich in een video meeting voor te doen als Leonid.<br>Deze techniek komt ook steeds vaker voor bij CEO fraude. Waarbij een kwaadwillende zich voordoet als een medewerken met hoge rechten (vaak de CEO) en geeft zijn medewerkers opdrachten om bijvoorbeeld met spoed geld naar een rekening over te maken of om gevoelige informatie te delen."
+    },
+    {
+        "id": 5,
+        "loc": [
+            "2",
+            29
+        ],
+        "color": [
+            0,
+            255,
+            251
+        ],
+        "name": "Versleutelen en Cloud toepassingen",
+        "beschrijving": "Detectie onder druk",
+        "table": [
+            [
+                true,
+                false,
+                false,
+                true,
+                false,
+                false
+            ],
+            [
+                false,
+                false,
+                true,
+                false,
+                false,
+                true
+            ],
+            [
+                true,
+                false,
+                false,
+                false,
+                true,
+                false
+            ],
+            [
+                true,
+                false,
+                false,
+                true,
+                false,
+                false
+            ],
+            [
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+            ]
+        ],
+        "uitleg":"Omdat steeds meer datastromen versleuteld worden is het lastiger om te detecteren of er malafide zaken over deze ‘netwerken’ gaan. <br>Tevens zetten steeds meer bedrijven de stap naar de cloud, dit heeft als effect dat bedrijven minder controle en inzicht hebben over de veiligheid van hun applicaties omdat dit nu in handen is van de cloud leverancier<br>Momenteel is er een nieuw DNS protocol in ontwikkeling welk het DNS request versleuteld dit geeft als probleem dat er geen monitoring is naar welke pagina’s gezocht wordt. Dit klinkt aller eerst als een positief punt voor privacy wat het ook is echter zorgt dit er ook voor dat bijvoorbeeld een firewall bekende malafide websites niet kan blokkeren omdat de firewall niet kan zien welke website opgevraagd wordt.<br>Tevens kan DNS gevoelige informatie bevatten voor bedrijven waarbij de encryptie positief is. Het nadeel voor hun ervan is vervolgens weer dat het bedrijf niet kan controleren of de door hun vertrouwde DNS resolver wordt gebruikt of dat hier een niet vertrouwde resolver wordt gebruikt.<br>In het geval dat deze resolver in beheer is van een kwaadwillende kunnen de gevoelige gegevens van DNS ingezien worden."
+    }
+]
