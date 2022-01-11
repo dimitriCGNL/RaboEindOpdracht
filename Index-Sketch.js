@@ -43,7 +43,7 @@ function draw() {
     textAlign(CENTER, CENTER)
     fill(0)
     textSize(30);
-    text("RaboBank Cyber Threat Chart", Width/2,50)
+    text("Rabobank Cyber Threat Chart", Width/2,50)
     chart1.show();
     for (var i = 0; i < P.length; i++) {
         P[i].show();
